@@ -1,6 +1,10 @@
+package test.refactoringgolf.store;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import main.refactoringgolf.store.Greeter;
 
 
 public class GreeterTest {

@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>refactoringgolf</groupId>
+        <artifactId>Java</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>refactoringgolf.store</groupId>
+    <artifactId>Store</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>0. Initial Tee</module>
+        <module>1. First Hole</module>
+        <module>2. Second Hole</module>
+        <module>3. Third Hole</module>
+        <module>4. Fourth Hole</module>
+    </modules>
+
+</project>
