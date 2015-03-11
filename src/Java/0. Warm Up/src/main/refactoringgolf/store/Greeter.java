@@ -1,4 +1,4 @@
-package main.refactoringgolf.store;
+package refactoringgolf.store;
 
 public class Greeter {
 

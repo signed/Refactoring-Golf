@@ -1,17 +1,15 @@
-package test.refactoringgolf.store;
-
-import static org.junit.Assert.*;
+package refactoringgolf.store;
 
 import org.junit.Test;
 
-import main.refactoringgolf.store.Greeter;
+import static org.junit.Assert.assertEquals;
 
 
 public class GreeterTest {
 
 	@Test
 	public void CanGreet(){
-		Greeter greeter=new Greeter();
+		refactoringgolf.store.Greeter greeter=new refactoringgolf.store.Greeter();
 		String greet=greeter.greet();
 		assertEquals("Hello World",greet);
 	}
