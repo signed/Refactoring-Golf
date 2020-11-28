@@ -1,3 +1,4 @@
+package refactoringgolf.store;
 
 public class Greeter {
 
