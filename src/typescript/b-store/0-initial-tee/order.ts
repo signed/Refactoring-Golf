@@ -4,48 +4,21 @@ import { ProductCategory } from './product-category';
 import { Salesman } from './salesman';
 
 export class Order {
-    private _customer: Customer;
-    private _salesman: Salesman;
-    private _orderedOn: Date;
-    private _deliveryStreet: string;
-    private _deliveryCity: string;
-    private _deliveryCountry: string | undefined;
-    private _items: Set<OrderItem>;
+    public readonly items: Set<OrderItem> = new Set<OrderItem>();
 
-    constructor(customer: Customer, salesman: Salesman, deliveryStreet: string, deliveryCity: string, deliveryCountry: string | undefined, orderedOn: Date) {
-        this._customer = customer;
-        this._salesman = salesman;
-        this._deliveryStreet = deliveryStreet;
-        this._deliveryCity = deliveryCity;
-        this._deliveryCountry = deliveryCountry;
-        this._orderedOn = orderedOn;
-        this._items = new Set<OrderItem>();
-    }
-
-    get deliveryCountry(): string | undefined {
-        return this._deliveryCountry;
-    }
-
-    get deliveryCity(): string {
-        return this._deliveryCity;
-    }
-
-    get salesman(): Salesman {
-        return this._salesman;
-    }
-
-    get customer(): Customer {
-        return this._customer;
-    }
-
-    get items(): Set<OrderItem> {
-        return this._items;
+    constructor(
+        public readonly customer: Customer,
+        public readonly salesman: Salesman,
+        public readonly deliveryStreet: string,
+        public readonly deliveryCity: string,
+        public readonly deliveryCountry: string | undefined,
+        public readonly orderedOn: Date) {
     }
 
     public total(): number {
         let totalItems = 0;
 
-        for (const item of this._items) {
+        for (const item of this.items) {
             let totalItem = 0;
             const itemAmount = item.product.unitPrice * item.quantity;
             if (item.product.category == ProductCategory.Accessories) {
@@ -76,6 +49,5 @@ export class Order {
 
         // total=totalItemst + tax + 15 shipping
         return totalItems + totalItems * 5 / 100 + 15;
-
     }
 }

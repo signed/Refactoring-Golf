@@ -1,14 +1,7 @@
 export class ThirdParty {
-
-    private phoneNumber: string;
     private contactName: string | undefined;
 
-    constructor(phoneNumber: string) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    getPhoneNumber(): string {
-        return this.phoneNumber;
+    constructor(public readonly phoneNumber: string) {
     }
 
     getContactName(): string|undefined {

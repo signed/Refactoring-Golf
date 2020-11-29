@@ -1,13 +1,9 @@
 export class ImageInfo {
 
-    public path: string;
+    public readonly path: string;
 
     public constructor(path: string) {
         this.path = path;
-    }
-
-    public getPath() {
-        return this.path;
     }
 
     public getImageType(): String {

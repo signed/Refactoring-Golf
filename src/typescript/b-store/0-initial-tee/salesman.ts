@@ -1,20 +1,14 @@
 import { Employee } from './employee';
 
 export class Salesman extends Employee {
-    private commissionPorcentage: number;
     private monthQuota: number = 0;
 
-    constructor(firstName: string, lastName: string, fixedSalary: number, commissionPorcentage: number) {
+    constructor(
+        firstName: string,
+        lastName: string,
+        fixedSalary: number,
+        public commissionPorcentage: number) {
         super(firstName, lastName, fixedSalary);
-        this.commissionPorcentage = commissionPorcentage;
-    }
-
-    setCommissionPorcentage(commissionPorcentage: number) {
-        this.commissionPorcentage = commissionPorcentage;
-    }
-
-    getCommissionPorcentage() {
-        return this.commissionPorcentage;
     }
 
     getMonthQuota() {
