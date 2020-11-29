@@ -1,6 +1,5 @@
 import { Customer } from './customer';
 import { OrderItem } from './order-item';
-import { ProductCategory } from './product-category';
 import { Salesman } from './salesman';
 
 export class Order {
@@ -36,34 +35,10 @@ export class Order {
     }
 
     private totalItems() {
-        let totalItems = 0;
+        let totalAmount = 0;
         for (const item of this.items) {
-            totalItems += this.totalItem(item);
+            totalAmount += item.totalItem();
         }
-        return totalItems;
-    }
-
-    private totalItem(item: OrderItem) {
-        let totalItem = 0;
-        const itemAmount = item.product.unitPrice * item.quantity;
-        if (item.product.category == ProductCategory.Accessories) {
-            let booksDiscount = 0;
-            if (itemAmount >= 100) {
-                booksDiscount = itemAmount * 10 / 100;
-            }
-            totalItem = itemAmount - booksDiscount;
-        }
-        if (item.product.category == ProductCategory.Bikes) {
-            // 20% discount for Bikes
-            totalItem = itemAmount - itemAmount * 20 / 100;
-        }
-        if (item.product.category == ProductCategory.Cloathing) {
-            let cloathingDiscount = 0;
-            if (item.quantity > 2) {
-                cloathingDiscount = item.product.unitPrice;
-            }
-            totalItem = itemAmount - cloathingDiscount;
-        }
-        return totalItem;
+        return totalAmount;
     }
 }
