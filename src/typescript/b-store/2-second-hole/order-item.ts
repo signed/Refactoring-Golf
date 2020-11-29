@@ -7,27 +7,42 @@ export class OrderItem {
         public readonly quantity: number
     ) {
     }
-    totalItem() {
-        let totalItem = 0;
-        const itemAmount = this.product.unitPrice * this.quantity;
+    total() {
+        let discount: number = 0;
         if (this.product.category == ProductCategory.Accessories) {
-            let booksDiscount = 0;
-            if (itemAmount >= 100) {
-                booksDiscount = itemAmount * 10 / 100;
-            }
-            totalItem = itemAmount - booksDiscount;
+            discount = this.calculateAccessoriesDiscount();
         }
         if (this.product.category == ProductCategory.Bikes) {
             // 20% discount for Bikes
-            totalItem = itemAmount - itemAmount * 20 / 100;
+            discount = this.calculateBikeDiscount();
         }
         if (this.product.category == ProductCategory.Cloathing) {
-            let cloathingDiscount = 0;
-            if (this.quantity > 2) {
-                cloathingDiscount = this.product.unitPrice;
-            }
-            totalItem = itemAmount - cloathingDiscount;
+            discount = this.calculateCloathingDiscount();
         }
-        return totalItem;
+        return this.itemAmount() - discount;
+    }
+
+    private calculateAccessoriesDiscount() {
+        let booksDiscount = 0;
+        if (this.itemAmount() >= 100) {
+            booksDiscount = this.itemAmount() * 10 / 100;
+        }
+        return booksDiscount;
+    }
+
+    private calculateBikeDiscount() {
+        return this.itemAmount() * 20 / 100;
+    }
+
+    private calculateCloathingDiscount() {
+        let cloathingDiscount = 0;
+        if (this.quantity > 2) {
+            cloathingDiscount = this.product.unitPrice;
+        }
+        return cloathingDiscount;
+    }
+
+    private itemAmount() {
+        return this.product.unitPrice * this.quantity;
     }
 }

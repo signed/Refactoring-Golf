@@ -37,7 +37,7 @@ export class Order {
     private totalItems() {
         let totalAmount = 0;
         for (const item of this.items) {
-            totalAmount += item.totalItem();
+            totalAmount += item.total();
         }
         return totalAmount;
     }
