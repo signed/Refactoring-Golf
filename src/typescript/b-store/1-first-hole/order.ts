@@ -16,38 +16,54 @@ export class Order {
     }
 
     public total(): number {
-        let totalItems = 0;
+        const totalItems = this.totalItems();
+        const tax = this.tax(totalItems);
+        const shipping = this.shipping();
 
-        for (const item of this.items) {
-            let totalItem = 0;
-            const itemAmount = item.product.unitPrice * item.quantity;
-            if (item.product.category == ProductCategory.Accessories) {
-                let booksDiscount = 0;
-                if (itemAmount >= 100) {
-                    booksDiscount = itemAmount * 10 / 100;
-                }
-                totalItem = itemAmount - booksDiscount;
-            }
-            if (item.product.category == ProductCategory.Bikes) {
-                // 20% discount for Bikes
-                totalItem = itemAmount - itemAmount * 20 / 100;
-            }
-            if (item.product.category == ProductCategory.Cloathing) {
-                let cloathingDiscount = 0;
-                if (item.quantity > 2) {
-                    cloathingDiscount = item.product.unitPrice;
-                }
-                totalItem = itemAmount - cloathingDiscount;
-            }
-            totalItems += totalItem;
-        }
+        return totalItems + tax + shipping;
+    }
 
+    private shipping() {
+        let shipping = 15;
         if (this.deliveryCountry == 'USA') {
-            // total=totalItems + tax + 0 shipping
-            return totalItems + totalItems * 5 / 100;
+            shipping = 0;
         }
+        return shipping;
+    }
 
-        // total=totalItemst + tax + 15 shipping
-        return totalItems + totalItems * 5 / 100 + 15;
+    private tax(totalItems: number) {
+        return totalItems * 5 / 100;
+    }
+
+    private totalItems() {
+        let totalItems = 0;
+        for (const item of this.items) {
+            totalItems += this.totalItem(item);
+        }
+        return totalItems;
+    }
+
+    private totalItem(item: OrderItem) {
+        let totalItem = 0;
+        const itemAmount = item.product.unitPrice * item.quantity;
+        if (item.product.category == ProductCategory.Accessories) {
+            let booksDiscount = 0;
+            if (itemAmount >= 100) {
+                booksDiscount = itemAmount * 10 / 100;
+            }
+            totalItem = itemAmount - booksDiscount;
+        }
+        if (item.product.category == ProductCategory.Bikes) {
+            // 20% discount for Bikes
+            totalItem = itemAmount - itemAmount * 20 / 100;
+        }
+        if (item.product.category == ProductCategory.Cloathing) {
+            let cloathingDiscount = 0;
+            if (item.quantity > 2) {
+                cloathingDiscount = item.product.unitPrice;
+            }
+            totalItem = itemAmount - cloathingDiscount;
+        }
+        return totalItem;
     }
 }
