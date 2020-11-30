@@ -1,3 +1,7 @@
+import { AccessoriesDiscount } from './accessories-discount';
+import { BikesDiscount } from './bike-discount';
+import { CategoryDiscount } from './category-discount';
+import { CloathingDiscount } from './cloathing-discount';
 import { Product } from './product';
 import { ProductCategory } from './product-category';
 
@@ -7,42 +11,26 @@ export class OrderItem {
         public readonly quantity: number
     ) {
     }
+
     total() {
-        let discount: number = 0;
-        if (this.product.category == ProductCategory.Accessories) {
-            discount = this.calculateAccessoriesDiscount();
-        }
-        if (this.product.category == ProductCategory.Bikes) {
-            // 20% discount for Bikes
-            discount = this.calculateBikeDiscount();
-        }
-        if (this.product.category == ProductCategory.Cloathing) {
-            discount = this.calculateCloathingDiscount();
-        }
-        return this.itemAmount() - discount;
+        return this.itemAmount() - this.createCategoryDiscount().calculateDiscount(this);
     }
 
-    private calculateAccessoriesDiscount() {
-        let booksDiscount = 0;
-        if (this.itemAmount() >= 100) {
-            booksDiscount = this.itemAmount() * 10 / 100;
+    private createCategoryDiscount(): CategoryDiscount {
+        if (this.product.category === ProductCategory.Accessories) {
+            return new AccessoriesDiscount();
         }
-        return booksDiscount;
-    }
-
-    private calculateBikeDiscount() {
-        return this.itemAmount() * 20 / 100;
-    }
-
-    private calculateCloathingDiscount() {
-        let cloathingDiscount = 0;
-        if (this.quantity > 2) {
-            cloathingDiscount = this.product.unitPrice;
+        if (this.product.category === ProductCategory.Bikes) {
+            return new BikesDiscount();
         }
-        return cloathingDiscount;
+        if (this.product.category === ProductCategory.Cloathing) {
+            return new CloathingDiscount();
+        }
+        return this.product.category
     }
 
-    private itemAmount() {
+
+    itemAmount() {
         return this.product.unitPrice * this.quantity;
     }
 }
