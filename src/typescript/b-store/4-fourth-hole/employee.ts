@@ -1,27 +1,28 @@
 export abstract class Employee {
-    protected manager: Employee | undefined;
+    manager: Employee | undefined;
     public street: string | undefined;
     public city: string | undefined;
     public country: string | undefined;
-    protected subordinates = new Set<Employee>();
-
     protected constructor(
         public firstName: string,
         public lastName: string,
         public fixedSalary: number) {
     }
 
-    getSubordinates(): Set<Employee> {
-        return new Set<Employee>(this.subordinates);
+    netSalary() {
+        return this.fixedSalary + this.benefits() - this.pensionFounds() - this.tax();
     }
 
-    addSubordinate(subordinate: Employee) {
-        this.subordinates.add(subordinate);
-        subordinate.manager = this;
+    protected tax() {
+        let tax = 0;
+        if (this.fixedSalary > 3500)
+            tax = this.fixedSalary * 5 / 100;
+        return tax;
     }
 
-    removeSubordinate(subordinate: Employee) {
-        this.subordinates.delete(subordinate);
-        subordinate.manager = undefined;
+    protected pensionFounds() {
+        return this.fixedSalary * 10 / 100;
     }
+
+    protected abstract benefits(): number;
 }

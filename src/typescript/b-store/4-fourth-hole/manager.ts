@@ -5,16 +5,23 @@ export class Manager extends Employee {
         super(firstname, lastName, fixedSalary);
     }
 
-    salaryAfterAdditionsAndDeductions() {
-        const benefits = this.salaryBenefits();
-        const pensionFounds = this.fixedSalary * 10 / 100;
-        let tax = 0;
-        if (this.fixedSalary > 3500)
-            tax = this.fixedSalary * 5 / 100;
-        return this.fixedSalary + benefits - pensionFounds - tax;
+    protected subordinates = new Set<Employee>();
+
+    getSubordinates(): Set<Employee> {
+        return new Set<Employee>(this.subordinates);
     }
 
-    private salaryBenefits():number {
+    addSubordinate(subordinate: Employee) {
+        this.subordinates.add(subordinate);
+        subordinate.manager = this;
+    }
+
+    removeSubordinate(subordinate: Employee) {
+        this.subordinates.delete(subordinate);
+        subordinate.manager = undefined;
+    }
+
+    protected benefits(): number {
         return this.subordinates.size * 20;
     }
 }

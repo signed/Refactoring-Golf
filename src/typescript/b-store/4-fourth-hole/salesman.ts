@@ -15,13 +15,8 @@ export class Salesman extends Employee {
         return this.monthQuota;
     }
 
-    netSalary(): number {
-        const benefits = this.monthQuota * this.commissionPorcentage / 100;
-        const pensionFounds = this.fixedSalary * 10 / 100;
-        let tax = 0;
-        if (this.fixedSalary > 3500)
-            tax = this.fixedSalary * 5 / 100;
-        return this.fixedSalary + benefits - pensionFounds - tax;
+    protected benefits() {
+        return this.monthQuota * this.commissionPorcentage / 100;
     }
 
     updateMonthQuota(addQuota: number) {
