@@ -1,0 +1,11 @@
+{
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "independent": false,
+  "command": {
+    "version": {
+      "exact": true
+    }
+  },
+  "version": "0.1.0"
+}
